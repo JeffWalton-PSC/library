@@ -5,7 +5,7 @@ import local_db
 
 START_ACADEMIC_YEAR = '2004'
 
-def select(table:str, fields:list=None, where:str="", distinct=False) -> pd.DataFrame:
+def select(table:str, fields:list=None, where:str="", distinct=False, **kwargs) -> pd.DataFrame:
     """
     Function pulls data from PowerCampus database.
 
@@ -34,13 +34,18 @@ def select(table:str, fields:list=None, where:str="", distinct=False) -> pd.Data
     else:
         distinct = ""
     
+    parsedates = None
+    if kwargs:
+        if 'parse_dates' in kwargs.keys():
+            parsedates = kwargs['parse_dates']
+
     sql_str = (
         f"SELECT {distinct}{fields} "
         + f"FROM {table} "
         + where
     )
     # print(sql_str)
-    return ( pd.read_sql_query(sql_str, connection)
+    return ( pd.read_sql_query(sql_str, connection, parse_dates=parsedates)
     )
 
 
