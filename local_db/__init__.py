@@ -29,7 +29,7 @@ def connection(test=False):
     #     + f"@{db_host}/{db_database}?"
     #     + f"driver={db_driver}"
     # )
-    connection_str = fr"mssql+pymssql://{db_user}:{db_pass}" + f"@{db_host}/{db_database}"
+    connection_str = fr"mssql+pymssql://{db_user}:{db_pass}@{db_host}/{db_database}"
     engine = create_engine(connection_str)
     return engine.connect()
 
